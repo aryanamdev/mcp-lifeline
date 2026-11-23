@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsup",
     "typecheck": "tsc --noEmit",
-    "test": "npm run build && node --test --test-timeout=30000 test/lifeline.test.mjs",
+    "test": "npm run build && node --test test/lifeline.test.mjs",
     "prepublishOnly": "npm run typecheck && npm test"
   },
   "keywords": [

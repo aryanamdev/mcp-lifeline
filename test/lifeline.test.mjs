@@ -59,7 +59,7 @@ after(() => {
     c.stderr.destroy();
     c.unref();
   }
-  spawn("pkill", ["-f", "^sleep 20$"], { stdio: "ignore" }).unref();
+  if (posix) spawn("pkill", ["-f", "^sleep 20$"], { stdio: "ignore" }).on("error", () => {}).unref();
 });
 
 const match = (child, re) => () => re.exec(child.err);
