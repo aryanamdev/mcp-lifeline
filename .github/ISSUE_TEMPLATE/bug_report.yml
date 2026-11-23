@@ -1,0 +1,48 @@
+name: Bug report
+description: A server leaked, or was shut down when it shouldn't have been
+labels: [bug]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What happened?
+      options:
+        - The server kept running after the client was gone (leak)
+        - The server was shut down while the client was still using it (false positive)
+        - The CLI wrapper / reap misbehaved
+        - Something else
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: OS, runtime and versions
+      placeholder: macOS 15.2, Node 22.11, mcp-lifeline 0.1.1
+    validations:
+      required: true
+  - type: input
+    id: client
+    attributes:
+      label: MCP client and version
+      placeholder: Claude Desktop 1.2.3 / Cursor 3.4 / Claude Code 2.1 ...
+    validations:
+      required: true
+  - type: textarea
+    id: config
+    attributes:
+      label: How the server is launched
+      description: The exact command / args from your client config, or how you call exitWhenOrphaned()
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: debug
+    attributes:
+      label: stderr with MCP_LIFELINE_DEBUG=1
+      render: text
+  - type: textarea
+    id: tree
+    attributes:
+      label: Process tree
+      description: "`ps -eo pid,ppid,command | grep -i mcp` (macOS/Linux) or Process Explorer (Windows)"
+      render: text

@@ -1,6 +1,6 @@
 {
   "name": "mcp-lifeline",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Stop stdio MCP servers from outliving their client. One line for server authors, a drop-in wrapper for everyone else.",
   "main": "./dist/index.cjs",
   "scripts": {

@@ -1,11 +1,11 @@
-# Publishes to npm with provenance when a GitHub release is published.
+# Publishes to npm with provenance when a version tag (v1.2.3) is pushed.
 # Auth: npm Trusted Publishing (OIDC). Configure it once on npmjs.com:
 #   package settings -> Trusted Publisher -> GitHub Actions -> aryanamdev/mcp-lifeline, workflow release.yml
 # No long-lived npm token is stored in this repo.
 name: Release
 on:
-  release:
-    types: [published]
+  push:
+    tags: ["v*"]
 
 permissions:
   contents: read
