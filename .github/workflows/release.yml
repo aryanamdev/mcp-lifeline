@@ -1,0 +1,30 @@
+# Publishes to npm with provenance when a GitHub release is published.
+# Auth: npm Trusted Publishing (OIDC). Configure it once on npmjs.com:
+#   package settings -> Trusted Publisher -> GitHub Actions -> aryanamdev/mcp-lifeline, workflow release.yml
+# No long-lived npm token is stored in this repo.
+name: Release
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write # OIDC for npm trusted publishing + provenance
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - run: npm install -g npm@latest # trusted publishing needs npm >= 11.5.1
+      - run: npm ci
+      - name: Check tag matches package.json version
+        run: |
+          v=$(node -p "require('./package.json').version")
+          [ "v$v" = "${GITHUB_REF_NAME}" ] || { echo "tag ${GITHUB_REF_NAME} != v$v"; exit 1; }
+      - run: npm run typecheck && npm test
+      - run: npm publish --provenance --access public

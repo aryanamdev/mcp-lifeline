@@ -1,0 +1,71 @@
+{
+  "name": "mcp-lifeline",
+  "version": "0.1.0",
+  "description": "Stop stdio MCP servers from outliving their client. One line for server authors, a drop-in wrapper for everyone else.",
+  "main": "./dist/index.cjs",
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run build && node --test --test-timeout=30000 test/lifeline.test.mjs",
+    "prepublishOnly": "npm run typecheck && npm test"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "stdio",
+    "orphan",
+    "zombie",
+    "process",
+    "watchdog",
+    "claude",
+    "cursor",
+    "parent-death",
+    "cleanup"
+  ],
+  "author": "Aryan Namdev",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  },
+  "homepage": "https://github.com/aryanamdev/mcp-lifeline#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aryanamdev/mcp-lifeline.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aryanamdev/mcp-lifeline/issues"
+  },
+  "type": "module",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "mcp-lifeline": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  }
+}
